@@ -2,6 +2,7 @@
 
 	require_once EXTENSIONS . '/unit_tests/lib/class.iterator.php';
 	require_once EXTENSIONS . '/unit_tests/lib/class.page.php';
+	require_once EXTENSIONS . '/unit_tests/lib/class.unit-test.php';
 	
 	class ContentExtensionUnit_TestsTests extends UnitTestsPage {
 		public function action() {
@@ -46,7 +47,7 @@
 			}
 			
 			else foreach ($filters as $path) {
-				$filter = ImageFilter::load($path);
+				$filter = UnitTest::load($path);
 				$row = new XMLElement('tr');
 				
 				$first_cell = Widget::TableData(
@@ -85,10 +86,32 @@
 					));
 				}
 				
-				$row->appendChild(Widget::TableData(
-					$filter->about()->extension
-				));
-
+				if ($filter->extension instanceof Extension) {
+					$extension = (object)$filter->extension->about();
+					
+					$row->appendChild(Widget::TableData(
+						$extension->name
+					));
+				}
+				
+				else if (strpos($filter->getFileName(), SYMPHONY . '/') === 0) {
+					$row->appendChild(Widget::TableData(
+						__('Symphony'), 'inactive'
+					));
+				}
+				
+				else if (strpos($filter->getFileName(), WORKSPACE . '/') === 0) {
+					$row->appendChild(Widget::TableData(
+						__('Workspace'), 'inactive'
+					));
+				}
+				
+				else {
+					$row->appendChild(Widget::TableData(
+						__('Other'), 'inactive'
+					));
+				}
+				
 				$table->appendChild($row);
 			}
 			

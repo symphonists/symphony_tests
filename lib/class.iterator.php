@@ -37,7 +37,7 @@
 
 		public function hasFileWithHandle($handle) {
 			foreach ($this as $filter) {
-				if (ImageFilter::findHandleFromPath($filter) == $handle) return true;
+				if (UnitTest::findHandleFromPath($filter) == $handle) return true;
 			}
 
 			return false;
