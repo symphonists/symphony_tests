@@ -11,11 +11,11 @@
 				'%1$s &ndash; %2$s',
 				array(
 					__('Symphony'),
-					__('Unit Tests')
+					__('Tests')
 				)
 			));
 			
-			$this->appendSubheading(__('Unit Tests'));
+			$this->appendSubheading(__('Tests'));
 			
 			$table = new XMLElement('table');
 			$table->appendChild(

@@ -1,11 +1,5 @@
 <?php
 	
-	require_once EXTENSIONS . '/unit_tests/lib/simpletest/unit_tester.php';
-	require_once EXTENSIONS . '/unit_tests/lib/simpletest/web_tester.php';
-	require_once EXTENSIONS . '/unit_tests/lib/simpletest/reporter.php';
-	require_once EXTENSIONS . '/unit_tests/lib/class.symphonytestiterator.php';
-	require_once EXTENSIONS . '/unit_tests/lib/class.symphonytestreporter.php';
-	
 	class SymphonyTestReporter extends SimpleReporter {
 		protected $fieldset;
 		protected $list;

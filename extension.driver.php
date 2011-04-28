@@ -19,13 +19,13 @@
 		public function fetchNavigation() {
 			return array(
 				array(
-					'location'	=> 'Blueprints',
-					'name'		=> 'Unit Tests',
+					'location'	=> 'System',
+					'name'		=> 'Tests',
 					'link'		=> '/tests/'
 				),
 				array(
-					'location'	=> 'Blueprints',
-					'name'		=> 'Unit Tests',
+					'location'	=> 'System',
+					'name'		=> 'Tests',
 					'link'		=> '/test/',
 					'visible'	=> 'no'
 				)

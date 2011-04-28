@@ -36,13 +36,12 @@
 				),
 				array(
 					__('Symphony'),
-					__('Unit Tests'),
+					__('Tests'),
 					$title
 				)
 			));
 			$this->appendSubheading($title);
-			$this->addStylesheetToHead(URL . '/extensions/unit_tests/assets/test.css');
-			//$this->addScriptToHead(URL . '/extensions/emailbuilder/assets/email.js');
+			$this->addStylesheetToHead(URL . '/extensions/symphony_tests/assets/test.css');
 
 			// Status message:
 			if (isset($this->_context[1])) {
