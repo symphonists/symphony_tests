@@ -62,7 +62,7 @@
 			$this->list->appendChild($item);
 			
 			$item = new XMLElement('dd');
-			$item->setAttribute('class', 'message error');
+			$item->setAttribute('class', 'message bad');
 			$item->setValue($message);
 			$this->list->appendChild($item);
 		}
@@ -82,7 +82,7 @@
 			$this->list->appendChild($item);
 			
 			$item = new XMLElement('dd');
-			$item->setAttribute('class', 'message exception');
+			$item->setAttribute('class', 'message bad');
 			$item->setValue(sprintf(
 				'Unexpected exception [%d] of type [%s] with message [%s] at [%s line %d]',
 				$this->getExceptionCount(),
