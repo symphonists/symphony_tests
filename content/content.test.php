@@ -1,6 +1,6 @@
 <?php
 	
-	require_once EXTENSIONS . '/unit_tests/lib/class.symphonytest.php';
+	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytest.php';
 	
 	class ContentExtensionSymphony_TestsTest extends SymphonyTestPage {
 		protected $test;
