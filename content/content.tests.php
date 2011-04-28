@@ -22,7 +22,13 @@
 			$filters = new UnitTestsIterator();
 			
 			$this->setPageType('table');
-			$this->setTitle(__('Symphony &ndash; Unit Tests'));
+			$this->setTitle(__(
+				'%1$s &ndash; %2$s',
+				array(
+					__('Symphony'),
+					__('Unit Tests')
+				)
+			));
 			
 			$this->appendSubheading(__('Unit Tests'));
 			
@@ -30,7 +36,7 @@
 			$table->appendChild(
 				Widget::TableHead(array(
 					array(__('Name'), 'col'),
-					array(__('Author'), 'col'),
+					array(__('Description'), 'col'),
 					array(__('Extension'), 'col')
 				))
 			);
@@ -47,68 +53,55 @@
 			}
 			
 			else foreach ($filters as $path) {
-				$filter = UnitTest::load($path);
+				$test = UnitTest::load($path);
+				$info = UnitTest::readInformation($test);
 				$row = new XMLElement('tr');
 				
 				$first_cell = Widget::TableData(
 					Widget::Anchor(
-						$filter->about()->name,
+						$info->name,
 						sprintf(
 							'%s/test/%s/',
 							$this->root_url,
-							$filter->handle
+							$test->handle
 						)
 					)
 				);
 				$first_cell->appendChild(Widget::Input(
-					sprintf('items[%d]', $filter->handle),
+					sprintf('items[%d]', $test->handle),
 					null, 'checkbox'
 				));
 				$row->appendChild($first_cell);
-
-				if (isset($filter->about()->author->website)) {
-					$row->appendChild(Widget::TableData(Widget::Anchor(
-						$filter->about()->author->name,
-						General::validateURL($filter->about()->author->website)
-					)));
-				}
 				
-				else if (isset($filter->about()->author->email)) {
-					$row->appendChild(Widget::TableData(Widget::Anchor(
-						$filter->about()->author->name,
-						'mailto:' . $filter->about()->author->email
-					)));	
+				if ($info->description) {
+					$row->appendChild(Widget::TableData(
+						$info->description
+					));
 				}
 				
 				else {
 					$row->appendChild(Widget::TableData(
-						$filter->about()->author->name
+						__('None'), 'inactive'
 					));
 				}
 				
-				if ($filter->extension instanceof Extension) {
-					$extension = (object)$filter->extension->about();
+				if ($info->{'in-extension'}) {
+					$extension = (object)Symphony::ExtensionManager()->create($info->{'extension'})->about();
 					
 					$row->appendChild(Widget::TableData(
 						$extension->name
 					));
 				}
 				
-				else if (strpos($filter->getFileName(), SYMPHONY . '/') === 0) {
+				else if ($info->{'in-symphony'}) {
 					$row->appendChild(Widget::TableData(
 						__('Symphony'), 'inactive'
 					));
 				}
 				
-				else if (strpos($filter->getFileName(), WORKSPACE . '/') === 0) {
+				else if ($info->{'in-workspace'}) {
 					$row->appendChild(Widget::TableData(
 						__('Workspace'), 'inactive'
-					));
-				}
-				
-				else {
-					$row->appendChild(Widget::TableData(
-						__('Other'), 'inactive'
 					));
 				}
 				

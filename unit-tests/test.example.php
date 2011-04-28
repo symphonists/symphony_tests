@@ -1,15 +1,23 @@
 <?php
 	
-	class UnitTestExample extends UnitTest {
-		public function about() {
-			return (object)array(
-				'name'			=> 'Example',
-				'author'		=> (object)array(
-					'name'			=> 'Rowan Lewis',
-					'website'		=> 'http://rowanlewis.com/',
-					'email'			=> 'me@rowanlewis.com'
-				)
-			);
+	/**
+	* Testing dude
+	*
+	* Fuck this is so boring!
+	*/
+	class UnitTestExample extends WebTestCase {
+		public function setUp() {
+			
+		}
+		
+		public function tearDown() {
+			
+		}
+		
+		public function testExample() {
+			$this->assertEqual(true, false);
+			trigger_error('Catastrophe');
+			throw new Exception('wtf');
 		}
 	}
 	

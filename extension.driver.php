@@ -22,6 +22,12 @@
 					'location'	=> 'Blueprints',
 					'name'		=> 'Unit Tests',
 					'link'		=> '/tests/'
+				),
+				array(
+					'location'	=> 'Blueprints',
+					'name'		=> 'Unit Tests',
+					'link'		=> '/test/',
+					'visible'	=> 'no'
 				)
 			);
 		}
