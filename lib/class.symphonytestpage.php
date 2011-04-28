@@ -2,7 +2,7 @@
 	
 	require_once TOOLKIT . '/class.administrationpage.php';
 	
-	class UnitTestsPage extends AdministrationPage {
+	class SymphonyTestPage extends AdministrationPage {
 		protected $root_url;
 		
 		public function __construct() {

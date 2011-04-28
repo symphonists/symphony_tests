@@ -1,18 +1,19 @@
 <?php
 	
-	class UnitTestsIterator extends ArrayIterator {
+	class SymphonyTestIterator extends ArrayIterator {
 		static protected $cache;
 		
 		public function __construct() {
 			if (!isset(self::$cache)) {
 				$paths = array(
-					WORKSPACE . '/unit-tests/test.*.php'
+					SYMPHONY . '/tests/test.*.php',
+					WORKSPACE . '/tests/test.*.php'
 				);
 				$files = array();
 				
 				foreach (Symphony::ExtensionManager()->listInstalledHandles() as $handle) {
 					$paths[] = sprintf(
-						'%s/%s/unit-tests/test.*.php',
+						'%s/%s/tests/test.*.php',
 						EXTENSIONS, $handle
 					);
 				}
@@ -37,7 +38,7 @@
 
 		public function hasFileWithHandle($handle) {
 			foreach ($this as $filter) {
-				if (UnitTest::findHandleFromPath($filter) == $handle) return true;
+				if (SymphonyTest::findHandleFromPath($filter) == $handle) return true;
 			}
 
 			return false;

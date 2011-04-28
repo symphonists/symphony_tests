@@ -1,15 +1,13 @@
 <?php
 	
-	require_once EXTENSIONS . '/unit_tests/lib/class.iterator.php';
-	require_once EXTENSIONS . '/unit_tests/lib/class.page.php';
-	require_once EXTENSIONS . '/unit_tests/lib/class.unit-test.php';
+	require_once EXTENSIONS . '/unit_tests/lib/class.symphonytest.php';
 	
-	class ContentExtensionUnit_TestsTest extends UnitTestsPage {
+	class ContentExtensionUnit_TestsTest extends SymphonyTestPage {
 		protected $test;
 
 		public function build($context) {
-			if (isset($context[0]) && UnitTest::exists($context[0])) {
-				$this->test = UnitTest::load($context[0]);
+			if (isset($context[0]) && SymphonyTest::exists($context[0])) {
+				$this->test = SymphonyTest::load($context[0]);
 			}
 			
 			return parent::build($context);
@@ -17,9 +15,9 @@
 
 		public function view() {
 			$test = $this->test;
-			$info = UnitTest::readInformation($test);
+			$info = SymphonyTest::readInformation($test);
 			$reporter = new SymphonyTestReporter();
-			
+
 			$test->run($reporter);
 
 			// Use 'Untitled' as page title when filter name is empty:

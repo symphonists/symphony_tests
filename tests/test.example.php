@@ -3,9 +3,9 @@
 	/**
 	* Testing dude
 	*
-	* Fuck this is so boring!
+	* Does it work, does it work???
 	*/
-	class UnitTestExample extends WebTestCase {
+	class SymphonyTestExample extends WebTestCase {
 		public function setUp() {
 			
 		}
