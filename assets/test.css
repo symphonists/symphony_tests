@@ -9,6 +9,12 @@ dl.stack dd {
 	margin-left: 20px;
 	max-width: 50em;
 }
+dl.stack dd.bad {
+	color: #770000;
+}
+dl.stack dd.good {
+	color: #007700;
+}
 
 p.result {
 	color: #00aa00;

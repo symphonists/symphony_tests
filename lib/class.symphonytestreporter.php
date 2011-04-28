@@ -109,7 +109,7 @@
 			$this->list->appendChild($item);
 			
 			$item = new XMLElement('dd');
-			$item->setAttribute('class', 'message failure');
+			$item->setAttribute('class', 'message bad');
 			$item->setValue($message);
 			$this->list->appendChild($item);
 		}
@@ -117,6 +117,26 @@
 		public function paintFormattedMessage($message) {
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message');
+			$item->setValue($message);
+			$this->list->appendChild($item);
+		}
+
+		public function paintPass($message) {
+			parent::paintPass($message);
+			
+			$breadcrumb = $this->getTestList();
+			array_shift($breadcrumb);
+			
+			$item = new XMLElement('dt');
+			$item->setAttribute('class', 'breadcrumb');
+			$item->setValue(sprintf(
+				'%s -&gt;',
+				implode(' -&gt; ', $breadcrumb)
+			));
+			$this->list->appendChild($item);
+			
+			$item = new XMLElement('dd');
+			$item->setAttribute('class', 'message good');
 			$item->setValue($message);
 			$this->list->appendChild($item);
 		}
