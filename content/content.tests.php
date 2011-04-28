@@ -2,7 +2,7 @@
 
 	require_once EXTENSIONS . '/unit_tests/lib/class.symphonytest.php';
 	
-	class ContentExtensionUnit_TestsTests extends SymphonyTestPage {
+	class ContentExtensionSymphony_TestsTests extends SymphonyTestPage {
 		public function view() {
 			$tests = new SymphonyTestIterator();
 			

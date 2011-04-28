@@ -1,9 +1,9 @@
 <?php
 	
-	class Extension_Unit_Tests extends Extension {
+	class Extension_Symphony_Tests extends Extension {
 		public function about() {
 			return array(
-				'name'			=> 'Unit Tests',
+				'name'			=> 'Symphony Tests',
 				'version'		=> '0.1',
 				'release-date'	=> '2011-04-27',
 				'author'		=> array(
