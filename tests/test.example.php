@@ -1,23 +1,23 @@
 <?php
 	
 	/**
-	* Testing dude
+	* Example Test
 	*
-	* Does it work, does it work???
+	* Description of the test (this will appear in Symphony).
 	*/
 	class SymphonyTestExample extends WebTestCase {
 		public function setUp() {
-			
+			// Construct your properties here.
 		}
 		
 		public function tearDown() {
-			
+			// And destruct them here.
 		}
 		
 		public function testExample() {
-			$this->assertEqual(true, false);
-			trigger_error('Catastrophe');
-			throw new Exception('wtf');
+			// Assert truth here.
+			
+			$this->assertEqual(true, true);
 		}
 	}
 	

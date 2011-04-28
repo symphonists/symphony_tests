@@ -26,7 +26,9 @@ You can write your own unit tests, just put your standard unit test class in:
 2.	`symphony/tests/test.classname.php`
 3.	`extensions/yourextension/tests/test.classname.php`
 
-You also need to prefix your class name with `SymphonyTest`. Take a look in the `tests/test.example.php` file for a basic extension.
+You also need to prefix your class name with `SymphonyTest`.
+
+Take a look in the `tests/test.example.php` file for a basic extension.
 
 
 [help]: http://simpletest.org/en/start-testing.html
