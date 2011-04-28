@@ -12,6 +12,7 @@
 			$this->click('I\'m Feeling Lucky');
 			$this->assertText('Symphony');
 			$this->assertNoText('Symfony');
+			$this->showHeaders();
 		}
 	}
 	
