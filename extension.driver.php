@@ -1,5 +1,9 @@
 <?php
 	
+	/**
+	 * A SimpleTest interface for Symphony.
+	 * @package symphony_tests
+	 */
 	class Extension_Symphony_Tests extends Extension {
 		/**
 		 * Extension information.
