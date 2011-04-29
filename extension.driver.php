@@ -1,6 +1,9 @@
 <?php
 	
 	class Extension_Symphony_Tests extends Extension {
+		/**
+		 * Extension information.
+		 */
 		public function about() {
 			return array(
 				'name'			=> 'Symphony Tests',
@@ -16,6 +19,9 @@
 			);
 		}
 		
+		/**
+		 * Add navigation items.
+		 */
 		public function fetchNavigation() {
 			return array(
 				array(

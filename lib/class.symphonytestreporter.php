@@ -1,9 +1,25 @@
 <?php
 	
+	/**
+	 * The SymphonyTestReporter class extends SimpleReporter to build a test case
+	 * report using XMLElements instead of string concatenation.
+	 * @package libs
+	 */
 	class SymphonyTestReporter extends SimpleReporter {
+		/**
+		 * The report parent element.
+		 */
 		protected $fieldset;
+		
+		/**
+		 * The internal list of executed tests, errors, passes and skips.
+		 */
 		protected $list;
 		
+		/**
+		 * Prepares a new fieldset.
+		 * @access public
+		 */
 		public function __construct($character_set = 'UTF-8') {
 			parent::__construct();
 			
@@ -14,10 +30,19 @@
 			$this->list->setAttribute('class', 'stack');
 		}
 		
+		/**
+		 * Fetch the internal fieldset.
+		 * @access public
+		 */
 		public function getFieldset() {
 			return $this->fieldset;
 		}
 		
+		/**
+		 * The footer represents the end of reporting, all elements are linked here.
+		 * @param string $test_name Name class of test.
+		 * @access public
+		 */
 		public function paintFooter($test_name) {
 			$failed = ($this->getFailCount() + $this->getExceptionCount() > 0);
 			
@@ -46,7 +71,12 @@
 			
 			$this->fieldset->appendChild($result);
 		}
-
+		
+		/**
+		 * Add a PHP error message to the message list.
+		 * @param string $message The message to output.
+		 * @access public
+		 */
 		public function paintError($message) {
 			parent::paintError($message);
 			
@@ -67,6 +97,11 @@
 			$this->list->appendChild($item);
 		}
 
+		/**
+		 * Add an exception message to the message list.
+		 * @param Exception $exception Used to generate the message.
+		 * @access public
+		 */
 		public function paintException($exception) {
 			parent::paintException($exception);
 			
@@ -94,6 +129,11 @@
 			$this->list->appendChild($item);
 		}
 
+		/**
+		 * Add an assertion failure to the message list.
+		 * @param string $message The message to output.
+		 * @access public
+		 */
 		public function paintFail($message) {
 			parent::paintFail($message);
 			
@@ -114,6 +154,11 @@
 			$this->list->appendChild($item);
 		}
 		
+		/**
+		 * Add debuging messages to the message list.
+		 * @param string $message The message to output.
+		 * @access public
+		 */
 		public function paintFormattedMessage($message) {
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message');
@@ -121,6 +166,11 @@
 			$this->list->appendChild($item);
 		}
 
+		/**
+		 * Add an assertion pass to the message list.
+		 * @param string $message The message to output.
+		 * @access public
+		 */
 		public function paintPass($message) {
 			parent::paintPass($message);
 			
@@ -141,6 +191,11 @@
 			$this->list->appendChild($item);
 		}
 
+		/**
+		 * Add an assertion skip to the message list.
+		 * @param string $message The message to output.
+		 * @access public
+		 */
 		public function paintSkip($message) {
 			parent::paintSkip($message);
 			

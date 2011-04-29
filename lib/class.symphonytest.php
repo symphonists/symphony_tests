@@ -7,15 +7,32 @@
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytestpage.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytestreporter.php';
 	
+	/**
+	 * The SymphonyTest class contains methods for loading test cases and handling
+	 * or extracting information for test cases.
+	 * @package libs
+	 */
 	class SymphonyTest {
 		static public $instances;
 		
+		/**
+		 * Does a test case exist?
+		 * @param string $handle The handle of the test case.
+		 * @access public
+		 * @static
+		 */
 		static public function exists($handle) {
 			$iterator = new SymphonyTestIterator();
 
 			return $iterator->hasFileWithHandle($handle);
 		}
 		
+		/**
+		 * Load a test case.
+		 * @param string $path The full path to the test case.
+		 * @access public
+		 * @static
+		 */
 		static public function load($path) {
 			if (!isset(self::$instances)) {
 				self::$instances = array();
@@ -48,6 +65,12 @@
 			return self::$instances[$class];
 		}
 		
+		/**
+		 * Extract the class name from a path.
+		 * @param string $path A valid test case path.
+		 * @access public
+		 * @static
+		 */
 		static public function findClassNameFromPath($path) {
 			$handle = self::findHandleFromPath($path);
 			$class = ucwords(str_replace('-', ' ', Lang::createHandle($handle)));
@@ -56,10 +79,22 @@
 			return $class;
 		}
 		
+		/**
+		 * Extract the handle from a path.
+		 * @param string $path A valid test case path.
+		 * @access public
+		 * @static
+		 */
 		static public function findHandleFromPath($path) {
 			return preg_replace('%^test\.|\.php$%', null, basename($path));
 		}
 		
+		/**
+		 * Find the first test case that has the supplied handle.
+		 * @param string $path A valid test case handle.
+		 * @access public
+		 * @static
+		 */
 		static public function findPathFromHandle($handle) {
 			foreach (new SymphonyTestIterator() as $filter) {
 				if (self::findHandleFromPath($filter) == $handle) return $filter;
@@ -68,7 +103,13 @@
 			return null;
 		}
 		
-		static public function readInformation($object) {
+		/**
+		 * Get information about a test case using reflection.
+		 * @param SimpleTestCase $object A test case object.
+		 * @access public
+		 * @static
+		 */
+		static public function readInformation(SimpleTestCase $object) {
 			$reflection = new ReflectionObject($object);
 			$filename = $reflection->getFileName();
 			$comment = self::stripComment($reflection->getDocComment());
@@ -98,6 +139,12 @@
 			return $info;
 		}
 		
+		/**
+		 * Utility that strips comment syntax from around PhpDocumentation comments.
+		 * @param string $comment A valid PhpDocumentation comment.
+		 * @access protected
+		 * @static
+		 */
 		static protected function stripComment($comment) {
 			$trim_syntax = function($item) {
 				return preg_replace('%^(/[*]{2}|\s*[*]/|\s*[*]+\s?)%', null, $item);

@@ -1,8 +1,20 @@
 <?php
 	
+	/**
+	 * Fetches all available test cases.
+	 * @package libs
+	 */
 	class SymphonyTestIterator extends ArrayIterator {
+		/**
+		 * Cached list of test cases.
+		 * @access protected
+		 * @static
+		 */
 		static protected $cache;
 		
+		/**
+		 * Finds all test cases the first time it's run, after that it uses the cache.
+		 */
 		public function __construct() {
 			if (!isset(self::$cache)) {
 				$paths = array(
@@ -36,6 +48,10 @@
 			}
 		}
 
+		/**
+		 * Does this iterator contain a test case with the specified handle?
+		 * @param string $handle The test case handle.
+		 */
 		public function hasFileWithHandle($handle) {
 			foreach ($this as $filter) {
 				if (SymphonyTest::findHandleFromPath($filter) == $handle) return true;

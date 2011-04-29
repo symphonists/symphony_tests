@@ -2,9 +2,20 @@
 	
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytest.php';
 	
+	/**
+	 * Display the results of a test case.
+	 * @package content
+	 */
 	class ContentExtensionSymphony_TestsTest extends SymphonyTestPage {
+		/**
+		 * The test case being displayed.
+		 */
 		protected $test;
-
+		
+		/**
+		 * Loads the appropriate test case while we have easy access to $context
+		 * @param array $context The current page context/parameters.
+		 */
 		public function build($context) {
 			if (isset($context[0]) && SymphonyTest::exists($context[0])) {
 				$this->test = SymphonyTest::load($context[0]);
@@ -12,7 +23,10 @@
 			
 			return parent::build($context);
 		}
-
+		
+		/**
+		 * Greate the page form.
+		 */
 		public function view() {
 			$test = $this->test;
 			$info = SymphonyTest::readInformation($test);
