@@ -1,8 +1,11 @@
 <?php
 	
 	/**
-	 * A SimpleTest interface for Symphony.
 	 * @package symphony_tests
+	 */
+	
+	/**
+	 * A SimpleTest interface for Symphony.
 	 */
 	class Extension_Symphony_Tests extends Extension {
 		/**

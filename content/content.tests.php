@@ -1,10 +1,13 @@
 <?php
 	
+	/**
+	 * @package content
+	 */
+	
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytest.php';
 	
 	/**
 	 * Display a table view of available test cases.
-	 * @package content
 	 */
 	class ContentExtensionSymphony_TestsTests extends SymphonyTestPage {
 		/**

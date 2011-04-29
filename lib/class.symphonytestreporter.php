@@ -1,9 +1,12 @@
 <?php
 	
 	/**
+	 * @package libs
+	 */
+	
+	/**
 	 * The SymphonyTestReporter class extends SimpleReporter to build a test case
 	 * report using XMLElements instead of string concatenation.
-	 * @package libs
 	 */
 	class SymphonyTestReporter extends SimpleReporter {
 		/**

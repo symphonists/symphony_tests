@@ -1,11 +1,14 @@
 <?php
 	
+	/**
+	 * @package libs
+	 */
+	
 	require_once TOOLKIT . '/class.administrationpage.php';
 	
 	/**
 	 * Adds useful utilities, well not really. It just sets $root_url so
 	 * that pages can build URLs.
-	 * @package libs
 	 */
 	class SymphonyTestPage extends AdministrationPage {
 		protected $root_url;

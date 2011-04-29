@@ -1,8 +1,11 @@
 <?php
 	
 	/**
-	 * Fetches all available test cases.
 	 * @package libs
+	 */
+	
+	/**
+	 * Fetches all available test cases.
 	 */
 	class SymphonyTestIterator extends ArrayIterator {
 		/**

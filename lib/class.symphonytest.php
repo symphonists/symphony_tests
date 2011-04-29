@@ -1,5 +1,9 @@
 <?php
 	
+	/**
+	 * @package libs
+	 */
+	
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/unit_tester.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/web_tester.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/reporter.php';
@@ -10,7 +14,6 @@
 	/**
 	 * The SymphonyTest class contains methods for loading test cases and handling
 	 * or extracting information for test cases.
-	 * @package libs
 	 */
 	class SymphonyTest {
 		static public $instances;
