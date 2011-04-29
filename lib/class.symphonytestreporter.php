@@ -110,14 +110,14 @@
 			
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message bad');
-			$item->setValue($message);
+			$item->setValue(trim($message));
 			$this->list->appendChild($item);
 		}
 		
 		public function paintFormattedMessage($message) {
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message');
-			$item->setValue($message);
+			$item->setValue(General::sanitize(trim($message)));
 			$this->list->appendChild($item);
 		}
 
@@ -137,7 +137,7 @@
 			
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message good');
-			$item->setValue($message);
+			$item->setValue(trim($message));
 			$this->list->appendChild($item);
 		}
 
@@ -157,7 +157,7 @@
 			
 			$item = new XMLElement('dd');
 			$item->setAttribute('class', 'message skip');
-			$item->setValue($message);
+			$item->setValue(trim($message));
 			$this->list->appendChild($item);
 		}
 	}
