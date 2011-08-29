@@ -1,23 +1,24 @@
 <?php
-	
+
 	/**
 	 * @package libs
 	 */
-	
+
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/unit_tester.php';
+	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/mock_objects.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/web_tester.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/reporter.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytestiterator.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytestpage.php';
 	require_once EXTENSIONS . '/symphony_tests/lib/class.symphonytestreporter.php';
-	
+
 	/**
 	 * The SymphonyTest class contains methods for loading test cases and handling
 	 * or extracting information for test cases.
 	 */
 	class SymphonyTest {
 		static public $instances;
-		
+
 		/**
 		 * Does a test case exist?
 		 * @param string $handle The handle of the test case.
@@ -29,7 +30,7 @@
 
 			return $iterator->hasFileWithHandle($handle);
 		}
-		
+
 		/**
 		 * Load a test case.
 		 * @param string $path The full path to the test case.
@@ -40,34 +41,34 @@
 			if (!isset(self::$instances)) {
 				self::$instances = array();
 			}
-			
+
 			if (file_exists($path)) {
 				$handle = self::findHandleFromPath($path);
 				$class = self::findClassNameFromPath($path);
 			}
-			
+
 			else {
 				$handle = $path;
 				$path = self::findPathFromHandle($path);
 				$class = self::findClassNameFromPath($path);
 			}
-			
+
 			if (!in_array($class, self::$instances)) {
 				require_once $path;
 
 				$instance = new $class;
 				$instance->handle = $handle;
-				
+
 				if (!$instance instanceof SimpleTestCase) {
 					throw new Exception('Unit test class must implement interface SymphonyTest.');
 				}
 
 				self::$instances[$class] = $instance;
 			}
-			
+
 			return self::$instances[$class];
 		}
-		
+
 		/**
 		 * Extract the class name from a path.
 		 * @param string $path A valid test case path.
@@ -81,7 +82,7 @@
 
 			return $class;
 		}
-		
+
 		/**
 		 * Extract the handle from a path.
 		 * @param string $path A valid test case path.
@@ -91,7 +92,7 @@
 		static public function findHandleFromPath($path) {
 			return preg_replace('%^test\.|\.php$%', null, basename($path));
 		}
-		
+
 		/**
 		 * Find the first test case that has the supplied handle.
 		 * @param string $path A valid test case handle.
@@ -105,7 +106,7 @@
 
 			return null;
 		}
-		
+
 		/**
 		 * Get information about a test case using reflection.
 		 * @param SimpleTestCase $object A test case object.
@@ -123,25 +124,25 @@
 				'in-symphony'	=> (strpos($filename, SYMPHONY . '/') === 0),
 				'in-workspace'	=> (strpos($filename, WORKSPACE . '/') === 0)
 			);
-			
+
 			if ($info->{'in-extension'}) {
 				$info->extension = basename(dirname(dirname($filename)));
 			}
-			
+
 			// Extract natural name:
 			if (preg_match('%^[^\n]+%', $comment, $match)) {
 				$info->name = $match[0];
 				$comment = trim(substr($comment, strlen($match[0])));
 			}
-			
+
 			// Extract description:
 			if ($comment) {
 				$info->description = $comment;
 			}
-			
+
 			return $info;
 		}
-		
+
 		/**
 		 * Utility that strips comment syntax from around PhpDocumentation comments.
 		 * @param string $comment A valid PhpDocumentation comment.
@@ -152,13 +153,13 @@
 			$trim_syntax = function($item) {
 				return preg_replace('%^(/[*]{2}|\s*[*]/|\s*[*]+\s?)%', null, $item);
 			};
-			
+
 			$lines = explode("\n", $comment);
 			$lines = array_map($trim_syntax, $lines);
 			$comment = implode("\n", $lines);
-			
+
 			return trim($comment);
 		}
 	}
-	
+
 ?>
