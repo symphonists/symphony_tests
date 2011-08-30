@@ -83,6 +83,13 @@
 		}
 
 		/**
+		 * Get the current extension directory.
+		 */
+		public function getExtensionDir() {
+			return dirname(__FILE__);
+		}
+
+		/**
 		 * True when no navigation group has been specified.
 		 */
 		protected $missing_navigation_group;

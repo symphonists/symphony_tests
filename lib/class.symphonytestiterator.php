@@ -1,9 +1,9 @@
 <?php
-	
+
 	/**
 	 * @package libs
 	 */
-	
+
 	/**
 	 * Fetches all available test cases.
 	 */
@@ -14,25 +14,27 @@
 		 * @static
 		 */
 		static protected $cache;
-		
+
 		/**
 		 * Finds all test cases the first time it's run, after that it uses the cache.
 		 */
 		public function __construct() {
 			if (!isset(self::$cache)) {
+				$local = Symphony::ExtensionManager()->create('symphony_tests')->getExtensionDir();
 				$paths = array(
 					SYMPHONY . '/tests/test.*.php',
+					$local . '/core-tests/test.*.php',
 					WORKSPACE . '/tests/test.*.php'
 				);
 				$files = array();
-				
+
 				foreach (Symphony::ExtensionManager()->listInstalledHandles() as $handle) {
 					$paths[] = sprintf(
 						'%s/%s/tests/test.*.php',
 						EXTENSIONS, $handle
 					);
 				}
-				
+
 				foreach ($paths as $path) {
 					$found = glob($path, GLOB_NOSORT);
 
@@ -63,5 +65,5 @@
 			return false;
 		}
 	}
-	
+
 ?>

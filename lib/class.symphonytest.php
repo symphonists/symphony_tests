@@ -114,6 +114,7 @@
 		 * @static
 		 */
 		static public function readInformation(SimpleTestCase $object) {
+			$extension_dir = Symphony::ExtensionManager()->create('symphony_tests')->getExtensionDir();
 			$reflection = new ReflectionObject($object);
 			$filename = $reflection->getFileName();
 			$comment = self::stripComment($reflection->getDocComment());
@@ -121,7 +122,10 @@
 				'name'			=> $reflection->getName(),
 				'description'	=> null,
 				'in-extension'	=> (strpos($filename, EXTENSIONS . '/') === 0),
-				'in-symphony'	=> (strpos($filename, SYMPHONY . '/') === 0),
+				'in-symphony'	=> (
+					strpos($filename, SYMPHONY . '/') === 0
+					|| strpos($filename, $extension_dir . '/core-tests/') === 0
+				),
 				'in-workspace'	=> (strpos($filename, WORKSPACE . '/') === 0)
 			);
 
