@@ -25,6 +25,9 @@
 			$this->target = (strlen(trim($_GET['tests'])) == 0 ? null : $_GET['tests']);
 			list($this->parent, $this->handle) = explode('.', $this->target);
 
+			$this->extensions['workspace'] = __('Workspace');
+			$this->extensions['symphony'] = __('Symphony');
+
 			foreach (new SymphonyTestIterator() as $filename) {
 				$test = SymphonyTest::load($filename);
 				$info = SymphonyTest::readInformation($test);
@@ -66,60 +69,24 @@
 				($this->target == null)
 			));
 
-			$workspace_item = $this->buildJumpItem(
-				__('Workspace'),
-				'?tests=workspace' . $this->_query_string,
-				($this->target == 'workspace')
-			);
-			$workspace_list = new XMLElement('ul');
-			$workspace_item->appendChild($workspace_list);
-			$list->appendChild($workspace_item);
-
-			$symphony_item = $this->buildJumpItem(
-				__('Symphony'),
-				'?tests=symphony' . $this->_query_string,
-				($this->target == 'symphony')
-			);
-			$symphony_list = new XMLElement('ul');
-			$symphony_item->appendChild($symphony_list);
-			$list->appendChild($symphony_item);
-
 			foreach ($this->tests as $target => $info) {
-				if ($info->{'in-symphony'} == true && $this->parent == 'symphony') {
-					$symphony_list->appendChild($this->buildJumpItem(
+				if (isset($extensions[$info->parent]) === false) {
+					$extension_item = $this->buildJumpItem(
+						$this->extensions[$info->parent],
+						'?tests=' . $info->parent . $this->_query_string,
+						($this->target == $info->parent)
+					);
+					$extensions[$info->parent] = new XMLElement('ul');
+					$extension_item->appendChild($extensions[$info->parent]);
+					$list->appendChild($extension_item);
+				}
+
+				if ($this->parent == $info->parent) {
+					$extensions[$info->parent]->appendChild($this->buildJumpItem(
 						$info->name,
 						'?tests=' . $target . $this->_query_string,
 						($this->target == $target)
 					));
-				}
-
-				else if ($info->{'in-workspace'} == true && $this->parent == 'workspace') {
-					$workspace_list->appendChild($this->buildJumpItem(
-						$info->name,
-						'?tests=' . $target . $this->_query_string,
-						($this->target == $target)
-					));
-				}
-
-				else if ($info->{'in-extension'} == true) {
-					if (isset($extensions[$info->extension]) === false) {
-						$extension_item = $this->buildJumpItem(
-							$this->extensions[$info->extension],
-							'?tests=' . $info->extension . $this->_query_string,
-							($this->target == $info->extension)
-						);
-						$extensions[$info->extension] = new XMLElement('ul');
-						$extension_item->appendChild($extensions[$info->extension]);
-						$list->appendChild($extension_item);
-					}
-
-					if ($info->{'in-symphony'} === false && $this->parent == $info->extension) {
-						$extensions[$info->extension]->appendChild($this->buildJumpItem(
-							$info->name,
-							'?tests=' . $target . $this->_query_string,
-							($this->target == $target)
-						));
-					}
 				}
 			}
 
@@ -130,17 +97,7 @@
 			$this->addStylesheetToHead(URL . '/extensions/symphony_tests/assets/devkit.css', 'screen');
 
 			if ($this->target === null) {
-				$wrapper->appendChild(new XMLElement('h2', __('Workspace')));
-
-				$this->buildContentList($wrapper, 'workspace');
-
-				$wrapper->appendChild(new XMLElement('h2', __('Symphony')));
-
-				$this->buildContentList($wrapper, 'symphony');
-
 				foreach ($this->extensions as $handle => $name) {
-					$wrapper->appendChild(new XMLElement('h2', $name));
-
 					$this->buildContentList($wrapper, $handle);
 				}
 			}
@@ -151,19 +108,6 @@
 				|| $this->target == 'symphony'
 				|| isset($this->extensions[$this->target])
 			) {
-				if (isset($this->extensions[$this->target])) {
-					$extension = $this->extensions[$this->target];
-					$wrapper->appendChild(new XMLElement('h2', $extension));
-				}
-
-				else if ($this->target == 'workspace') {
-					$wrapper->appendChild(new XMLElement('h2', __('Workspace')));
-				}
-
-				else if ($this->target == 'symphony') {
-					$wrapper->appendChild(new XMLElement('h2', __('Symphony')));
-				}
-
 				$this->buildContentList($wrapper, $this->target);
 			}
 
@@ -208,13 +152,11 @@
 			}
 
 			if ($found === true) {
-				$wrapper->appendChild($list);
-			}
+				if (isset($this->extensions[$parent])) {
+					$wrapper->appendChild(new XMLElement('h2', $this->extensions[$parent]));
+				}
 
-			else {
-				$info = new XMLElement('p');
-				$info->setValue(__('No test cases where found in this location.'));
-				$wrapper->appendChild($info);
+				$wrapper->appendChild($list);
 			}
 		}
 	}
