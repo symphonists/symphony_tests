@@ -7,6 +7,9 @@
 	font-family: sans-serif;
 	font-size: 16pt;
 }
+#content h2 ~ h2 {
+	margin: 25px 0 0 0;
+}
 #content fieldset {
 	margin: 15px 0 0 0;
 }

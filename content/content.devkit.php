@@ -22,7 +22,7 @@
 		}
 
 		public function build() {
-			$this->target = (strlen(trim($_GET['tests'])) == 0 ? 'workspace' : $_GET['tests']);
+			$this->target = (strlen(trim($_GET['tests'])) == 0 ? null : $_GET['tests']);
 			list($this->parent, $this->handle) = explode('.', $this->target);
 
 			foreach (new SymphonyTestIterator() as $filename) {
@@ -59,6 +59,12 @@
 		protected function buildJump($wrapper) {
 			$list = new XMLElement('ul');
 			$extensions = array();
+
+			$list->appendChild($this->buildJumpItem(
+				__('All Tests'),
+				'?tests' . $this->_query_string,
+				($this->target == null)
+			));
 
 			$workspace_item = $this->buildJumpItem(
 				__('Workspace'),
@@ -123,8 +129,24 @@
 		public function buildContent($wrapper) {
 			$this->addStylesheetToHead(URL . '/extensions/symphony_tests/assets/devkit.css', 'screen');
 
-			// Index page:
-			if (
+			if ($this->target === null) {
+				$wrapper->appendChild(new XMLElement('h2', __('Workspace')));
+
+				$this->buildContentList($wrapper, 'workspace');
+
+				$wrapper->appendChild(new XMLElement('h2', __('Symphony')));
+
+				$this->buildContentList($wrapper, 'symphony');
+
+				foreach ($this->extensions as $handle => $name) {
+					$wrapper->appendChild(new XMLElement('h2', $name));
+
+					$this->buildContentList($wrapper, $handle);
+				}
+			}
+
+			// Sub index page:
+			else if (
 				$this->target == 'workspace'
 				|| $this->target == 'symphony'
 				|| isset($this->extensions[$this->target])
@@ -142,32 +164,7 @@
 					$wrapper->appendChild(new XMLElement('h2', __('Symphony')));
 				}
 
-				$list = new XMLElement('dl');
-				$found = false;
-
-				foreach ($this->tests as $target => $test) {
-					if ($test->parent != $this->target) continue;
-
-					$title = new XMLElement('dt');
-					$title->appendChild(Widget::Anchor(
-						$test->name,
-						'?tests=' . $target . $this->_query_string
-					));
-					$list->appendChild($title);
-					$list->appendChild(new XMLElement('dd', $test->description));
-
-					$found = true;
-				}
-
-				if ($found === true) {
-					$wrapper->appendChild($list);
-				}
-
-				else {
-					$info = new XMLElement('p');
-					$info->setValue(__('No test cases where found in this location.'));
-					$wrapper->appendChild($info);
-				}
+				$this->buildContentList($wrapper, $this->target);
 			}
 
 			// View a test:
@@ -189,6 +186,35 @@
 
 				$wrapper->appendChild($fieldset);
 				$wrapper->appendChild($reporter->getFieldset());
+			}
+		}
+
+		public function buildContentList($wrapper, $parent) {
+			$list = new XMLElement('dl');
+			$found = false;
+
+			foreach ($this->tests as $target => $test) {
+				if ($test->parent != $parent) continue;
+
+				$title = new XMLElement('dt');
+				$title->appendChild(Widget::Anchor(
+					$test->name,
+					'?tests=' . $target . $this->_query_string
+				));
+				$list->appendChild($title);
+				$list->appendChild(new XMLElement('dd', $test->description));
+
+				$found = true;
+			}
+
+			if ($found === true) {
+				$wrapper->appendChild($list);
+			}
+
+			else {
+				$info = new XMLElement('p');
+				$info->setValue(__('No test cases where found in this location.'));
+				$wrapper->appendChild($info);
 			}
 		}
 	}
