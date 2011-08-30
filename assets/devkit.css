@@ -14,6 +14,13 @@
 #content h2 + fieldset {
 	margin: 10px 0 0 0;
 }
+#content legend {
+	float: left;
+	padding: 0 0 10px 0;
+}
+#content legend + * {
+	clear: both;
+}
 #content dt,
 #content p {
 	color: hsl(0, 0%, 80%);
