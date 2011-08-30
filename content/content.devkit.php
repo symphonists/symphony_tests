@@ -97,8 +97,10 @@
 			$this->addStylesheetToHead(URL . '/extensions/symphony_tests/assets/devkit.css', 'screen');
 
 			if ($this->target === null) {
+				$wrapper->appendChild(new XMLElement('h2', __('All Tests')));
+
 				foreach ($this->extensions as $handle => $name) {
-					$this->buildContentList($wrapper, $handle);
+					$this->buildContentList($wrapper, $handle, 'h3');
 				}
 			}
 
@@ -133,7 +135,7 @@
 			}
 		}
 
-		public function buildContentList($wrapper, $parent) {
+		public function buildContentList($wrapper, $parent, $heading = 'h2') {
 			$list = new XMLElement('dl');
 			$found = false;
 
@@ -153,7 +155,7 @@
 
 			if ($found === true) {
 				if (isset($this->extensions[$parent])) {
-					$wrapper->appendChild(new XMLElement('h2', $this->extensions[$parent]));
+					$wrapper->appendChild(new XMLElement($heading, $this->extensions[$parent]));
 				}
 
 				$wrapper->appendChild($list);
