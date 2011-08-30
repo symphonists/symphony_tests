@@ -1,0 +1,36 @@
+#content {
+	color: hsl(0, 0%, 50%);
+	font: 9pt monospace;
+	padding: 20px;
+}
+#content h2 {
+	font-family: sans-serif;
+	font-size: 16pt;
+}
+#content fieldset {
+	margin: 15px 0 0 0;
+}
+#content dt,
+#content p {
+	color: hsl(0, 0%, 80%);
+	margin: 10px 0 0 0;
+}
+#content dd {
+	padding: 0 0 0 20px;
+	white-space: pre-wrap;
+}
+#content dd + dd {
+	margin: 10px 0 0 0;
+}
+#content dd.bad {
+	color: hsl(0, 40%, 60%);
+}
+#content dd.good {
+	color: hsl(100, 40%, 60%);
+}
+#content p.result {
+	color: hsl(100, 40%, 60%);
+}
+#content p.result.failed {
+	color: hsl(0, 40%, 60%);
+}

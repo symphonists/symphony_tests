@@ -9,6 +9,16 @@
 	 */
 	class Extension_Symphony_Tests extends Extension {
 		/**
+		 * Is the devkit active?
+		 */
+		protected $devkit_active;
+
+		/**
+		 * True when no navigation group has been specified.
+		 */
+		protected $missing_navigation_group;
+
+		/**
 		 * Extension information.
 		 */
 		public function about() {
@@ -57,6 +67,16 @@
 					'page' => '/system/preferences/',
 					'delegate' => 'Save',
 					'callback' => 'actionsPreferences'
+				),
+				array(
+					'page'		=> '/frontend/',
+					'delegate'	=> 'FrontendDevKitResolve',
+					'callback'	=> 'frontendDevKitResolve'
+				),
+				array(
+					'page'		=> '/frontend/',
+					'delegate'	=> 'ManipulateDevKitNavigation',
+					'callback'	=> 'manipulateDevKitNavigation'
 				)
 			);
 		}
@@ -90,9 +110,32 @@
 		}
 
 		/**
-		 * True when no navigation group has been specified.
+		 * Show the devkit when someone accesses ?tests
 		 */
-		protected $missing_navigation_group;
+		public function frontendDevKitResolve($context) {
+			if (isset($_GET['tests'])) {
+				require_once(EXTENSIONS . '/symphony_tests/content/content.devkit.php');
+
+				$context['devkit'] = new Content_TestsDevKit();
+				$this->devkit_active = true;
+			}
+		}
+
+		/**
+		 * Add "Tests" to the devkit menu.
+		 */
+		public function manipulateDevKitNavigation($context) {
+			$xml = $context['xml'];
+			$item = $xml->createElement('item');
+			$item->setAttribute('name', __('Tests'));
+			$item->setAttribute('handle', 'tests');
+			$item->setAttribute('active', (
+				$this->devkit_active
+					? 'yes' : 'no'
+			));
+
+			$xml->documentElement->appendChild($item);
+		}
 
 		/**
 		 * Get the name of the desired navigation group.
