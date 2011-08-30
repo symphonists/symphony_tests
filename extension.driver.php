@@ -24,8 +24,8 @@
 		public function about() {
 			return array(
 				'name'			=> 'Symphony Tests',
-				'version'		=> '0.2',
-				'release-date'	=> '2011-08-29',
+				'version'		=> '0.3',
+				'release-date'	=> '2011-08-30',
 				'author'		=> array(
 					array(
 						'name'			=> 'Rowan Lewis',
