@@ -10,13 +10,15 @@
 	class Extension_Symphony_Tests extends Extension {
 		/**
 		 * Is the devkit active?
+		 * @var boolean
 		 */
-		protected $devkit_active;
+		protected $devkit_active = false;
 
 		/**
 		 * True when no navigation group has been specified.
+		 * @var boolean
 		 */
-		protected $missing_navigation_group;
+		protected $missing_navigation_group = false;
 
 		/**
 		 * Extension information.
@@ -188,7 +190,7 @@
 
 			$fieldset = new XMLElement('fieldset');
 			$fieldset->setAttribute('class', 'settings');
-			$fieldset->appendChild(new XMLElement('legend', __('Email Builder')));
+			$fieldset->appendChild(new XMLElement('legend', __('Symphony Tests')));
 
 			$label = Widget::Label(
 				__('Navigation Group')
@@ -218,5 +220,3 @@
 			$wrapper->appendChild($fieldset);
 		}
 	}
-
-?>

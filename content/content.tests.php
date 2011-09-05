@@ -11,7 +11,7 @@
 	 */
 	class ContentExtensionSymphony_TestsTests extends SymphonyTestPage {
 		/**
-		 * Greate the page form.
+		 * Create the page form.
 		 */
 		public function view() {
 			$tests = new SymphonyTestIterator();
@@ -100,5 +100,3 @@
 			$this->Form->appendChild($table);
 		}
 	}
-
-?>
