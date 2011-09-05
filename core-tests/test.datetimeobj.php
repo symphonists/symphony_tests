@@ -369,6 +369,32 @@
 			$this->assertEqual($string['start'], '1960-10-10 02:00:00');
 			$this->assertEqual($string['end'], '1960-10-10 02:00:00');
 		}
+
+		public function testRelative() {
+			// `equal to or later than now - 24 hours`
+			$string = 'equal to or later than now - 24 hours';
+			$result = fieldDate::parseFilter($string);
+
+			$this->assertNotEqual($result, fieldDate::ERROR);
+			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time() - (60 * 60 * 24)));
+			$this->assertEqual($string['end'], '2038-01-01 23:59:59');
+
+			// `equal to or later than now + 6 weeks`
+			$string = 'equal to or later than now + 6 weeks';
+			$result = fieldDate::parseFilter($string);
+
+			$this->assertNotEqual($result, fieldDate::ERROR);
+			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 42)));
+			$this->assertEqual($string['end'], '2038-01-01 23:59:59');
+
+			// `now to now + 6 weeks`
+			$string = 'now to now + 6 weeks';
+			$result = fieldDate::parseFilter($string);
+
+			$this->assertNotEqual($result, fieldDate::ERROR);
+			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time()));
+			$this->assertEqual($string['end'], date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 42)));
+		}
 	}
 
 ?>
