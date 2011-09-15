@@ -154,12 +154,14 @@
 		 * @static
 		 */
 		static protected function stripComment($comment) {
-			$trim_syntax = function($item) {
-				return preg_replace('%^(/[*]{2}|\s*[*]/|\s*[*]+\s?)%', null, $item);
+			if(!function_exists('trim_syntax')) {
+				function trim_syntax($item) {
+					return preg_replace('%^(/[*]{2}|\s*[*]/|\s*[*]+\s?)%', null, $item);
+				}
 			};
 
 			$lines = explode("\n", $comment);
-			$lines = array_map($trim_syntax, $lines);
+			$lines = array_map('trim_syntax', $lines);
 			$comment = implode("\n", $lines);
 
 			return trim($comment);
