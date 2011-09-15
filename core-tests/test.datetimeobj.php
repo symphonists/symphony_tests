@@ -16,6 +16,7 @@
 		);
 
 		public function setUp() {
+			require_once TOOLKIT . '/class.field.php';
 			require_once TOOLKIT . '/fields/field.date.php';
 			define('ONE_DAY', 60 * 60 * 24);
 		}
