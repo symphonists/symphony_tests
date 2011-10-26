@@ -18,7 +18,6 @@
 		public function setUp() {
 			require_once TOOLKIT . '/class.field.php';
 			require_once TOOLKIT . '/fields/field.date.php';
-			define('ONE_DAY', 60 * 60 * 24);
 		}
 
 		public function testLaterThan() {
@@ -378,7 +377,7 @@
 			$result = fieldDate::parseFilter($string);
 
 			$this->assertNotEqual($result, fieldDate::ERROR);
-			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time() - ONE_DAY));
+			$this->assertEqual($string['start'], date('Y-m-d H:i:s', strtotime('now - 1 day')));
 			$this->assertEqual($string['end'], '2038-01-01 23:59:59');
 
 			// `equal to or later than now + 6 weeks`
@@ -386,7 +385,7 @@
 			$result = fieldDate::parseFilter($string);
 
 			$this->assertNotEqual($result, fieldDate::ERROR);
-			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time() + (ONE_DAY * 42)));
+			$this->assertEqual($string['start'], date('Y-m-d H:i:s', strtotime('now + 6 weeks')));
 			$this->assertEqual($string['end'], '2038-01-01 23:59:59');
 
 			// `now to now + 6 weeks`
@@ -395,7 +394,7 @@
 
 			$this->assertNotEqual($result, fieldDate::ERROR);
 			$this->assertEqual($string['start'], date('Y-m-d H:i:s', time()));
-			$this->assertEqual($string['end'], date('Y-m-d H:i:s', time() + (ONE_DAY * 42)));
+			$this->assertEqual($string['end'], date('Y-m-d H:i:s', strtotime('now + 6 weeks')));
 
 			// `earlier than today`
 			$string = 'earlier than today';
@@ -403,7 +402,7 @@
 
 			$this->assertNotEqual($result, fieldDate::ERROR);
 			$this->assertEqual($string['start'], '0000-01-01');
-			$this->assertEqual($string['end'], date('Y-m-d', time() - ONE_DAY) . ' 23:59:59');
+			$this->assertEqual($string['end'], date('Y-m-d', strtotime('now - 1 day')) . ' 23:59:59');
 
 			// `equal to or earlier than today`
 			$string = 'equal to or earlier than today';
@@ -434,10 +433,28 @@
 			$result = fieldDate::parseFilter($string);
 
 			$this->assertNotEqual($result, fieldDate::ERROR);
-			$this->assertEqual($string['start'], date('Y-m-d', time() - ONE_DAY) . ' 00:00:01');
+			$this->assertEqual($string['start'], date('Y-m-d', strtotime('now - 1 day')) . ' 00:00:01');
 			$this->assertEqual($string['end'], '2038-01-01 23:59:59');
 		}
 
+		public function testProcessing() {
+
+			DateTimeObj::setSettings(array(
+				'time_format' => 'g:i a',
+				'date_format' => 'm/d/Y',
+				'datetime_separator' => ' ',
+				'timezone' => 'Australia/Brisbane',
+			));
+
+			$input = '10/26/2011 9:48 pm';
+
+			$this->assertTrue(DateTimeObj::validate($input));
+
+			$timestamp = DateTimeObj::get('U', $input);
+
+			$this->assertEqual($input, DateTimeObj::get('m/d/Y g:i a', $timestamp));
+
+		}
 
 	}
 
