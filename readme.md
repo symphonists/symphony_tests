@@ -1,17 +1,15 @@
 # Symphony Tests
 
-__Version:__ 0.3  
-__Author:__ Rowan Lewis <me@rowanlewis.com>  
-__Build Date:__ 30 August 2011  
-__Requirements:__ Symphony 2.2  
+__Version:__ 0.4
+__Author:__ Rowan Lewis <me@rowanlewis.com>
+__Build Date:__ 1 April 2012
+__Requirements:__ Symphony 2.3
 
-
-The Symphony Tests extension is a Symphony frontend for the [SimpleTest][help] unit testing framework.
-
+The Symphony Tests extension is a Symphony frontend for the [SimpleTest][http://simpletest.org/en/start-testing.html] unit testing framework.
 
 ## Installation
 
-1.	Upload the 'symphony_tests' folder in this archive to your Symphony 'extensions' folder.
+1.	Upload the `symphony_tests` folder in this archive to your Symphony `/extensions` folder.
 
 2.	Enable it by selecting the "Symphony Tests" extension, choose Enable from the with-selected menu, then click Apply.
 
@@ -29,6 +27,3 @@ You can write your own unit tests, just put your standard unit test class in:
 You also need to prefix your class name with `SymphonyTest`.
 
 Take a look in the `tests/test.example.php` file for a basic extension.
-
-
-[help]: http://simpletest.org/en/start-testing.html

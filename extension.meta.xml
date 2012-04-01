@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="symphony_tests" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Symphony Tests</name>
+	<description>A collection of unit tests using the SimpleTest framework for Symphony.</description>
+	<authors>
+		<author>
+			<name github="rowan-lewis" symphony="buzzomatic">Rowan Lewis</name>
+		</author>
+		<author>
+			<name github="symphonycms" symphony="team">Symphony Team</name>
+		</author>
+	</authors>
+	<releases>
+		<release version="0.4" date="2012-04-01" min="2.3" />
+		<release version="0.3" date="2011-08-30" min="2.2" max="2.2.5" />
+	</releases>
+</extension>

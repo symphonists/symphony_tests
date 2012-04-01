@@ -21,24 +21,6 @@
 		protected $missing_navigation_group = false;
 
 		/**
-		 * Extension information.
-		 */
-		public function about() {
-			return array(
-				'name'			=> 'Symphony Tests',
-				'version'		=> '0.3',
-				'release-date'	=> '2011-08-30',
-				'author'		=> array(
-					array(
-						'name'			=> 'Rowan Lewis',
-						'website'		=> 'http://rowanlewis.com/',
-						'email'			=> 'me@rowanlewis.com'
-					)
-				)
-			);
-		}
-
-		/**
 		 * Cleanup installation.
 		 */
 		public function uninstall() {
@@ -152,8 +134,7 @@
 		 * Get a list of available navigation groups.
 		 */
 		public function getNavigationGroups() {
-			$sectionManager = new SectionManager(Symphony::Engine());
-			$sections = $sectionManager->fetch(null, 'ASC', 'sortorder');
+			$sections = SectionManager::fetch(null, 'ASC', 'sortorder');
 			$options = array();
 
 			if (is_array($sections)) foreach ($sections as $section) {
