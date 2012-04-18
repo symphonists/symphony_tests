@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="symphony_tests" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Symphony Tests</name>
+	<description>Easy unit testing support for Symphony.</description>
+	<repo type="github">https://github.com/symphonists/symphony_tests</repo>
+	<types>
+		<type>Performance</type>
+		<type>Testing</type>
+	</types>
+	<authors>
+		<author>
+			<name github="rowan-lewis">Rowan Lewis</name>
+		</author>
+		<author>
+			<name github="symphonists" symphony="community">Symphony Community</name>
+		</author>
+	</authors>
+	<releases>
+		<release version="0.3.0" date="2011-08-30" min="2.2" />
+	</releases>
+</extension>
