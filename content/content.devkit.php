@@ -46,9 +46,7 @@
 					$info->parent = $info->extension;
 
 					if (isset($this->extensions[$info->extension]) === false) {
-						$extension = Symphony::ExtensionManager()
-							->create($info->extension)
-							->about();
+						$extension = Symphony::ExtensionManager()->about($info->extension);
 						$this->extensions[$info->extension] = $extension['name'];
 					}
 				}
