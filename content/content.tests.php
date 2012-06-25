@@ -81,10 +81,10 @@
 				}
 
 				else if ($info->{'in-extension'}) {
-					$extension = (object)Symphony::ExtensionManager()->create($info->{'extension'})->about();
+					$extension = ExtensionManager::about($info->{'extension'});
 
 					$row->appendChild(Widget::TableData(
-						$extension->name
+						$extension['name']
 					));
 				}
 

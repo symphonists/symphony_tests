@@ -14,7 +14,7 @@
 		protected $root_url;
 		
 		public function __construct() {
-			parent::__construct(Symphony::Engine());
+			parent::__construct();
 			
 			$data = Symphony::Engine()->getPageCallback();
 			
