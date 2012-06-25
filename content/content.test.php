@@ -60,6 +60,10 @@
 			$this->appendSubheading($title);
 			$this->addStylesheetToHead(URL . '/extensions/symphony_tests/assets/test.css');
 
+			$this->insertBreadcrumbs(array(
+				Widget::Anchor(__('Tests'), $this->root_url. '/tests/')
+			));
+
 			$fieldset = new XMLElement('fieldset');
 			$fieldset->setAttribute('class', 'settings');
 			$fieldset->appendChild(new XMLElement('legend', __('Description')));
