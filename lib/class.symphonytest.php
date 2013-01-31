@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * @package libs
+	 * @package lib
 	 */
 
 	require_once EXTENSIONS . '/symphony_tests/lib/simpletest/unit_tester.php';
@@ -167,5 +167,3 @@
 			return trim($comment);
 		}
 	}
-
-?>

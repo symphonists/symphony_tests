@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * @package libs
+	 * @package lib
 	 */
 
 	/**
@@ -18,38 +18,50 @@
 		/**
 		 * Finds all test cases the first time it's run, after that it uses the cache.
 		 */
-		public function __construct() {
-			if (!isset(self::$cache)) {
-				$local = ExtensionManager::create('symphony_tests')->getExtensionDir();
-				$paths = array(
-					SYMPHONY . '/tests/test.*.php',
-					$local . '/core-tests/test.*.php',
-					WORKSPACE . '/tests/test.*.php'
-				);
+		public function __construct(array $paths = null) {
+			$key = (
+				is_array($paths) && empty($paths) === false
+					? implode(':', $paths)
+					: 'all'
+			);
+
+			if (isset(self::$cache) === false) {
+				self::$cache = array();
+			}
+
+			if (isset(self::$cache[$key]) === false) {
 				$files = array();
 
-				foreach (ExtensionManager::listInstalledHandles() as $handle) {
-					$paths[] = sprintf(
-						'%s/%s/tests/test.*.php',
-						EXTENSIONS, $handle
+				if ($paths === null) {
+					$local = ExtensionManager::create('symphony_tests')->getExtensionDir();
+					$paths = array(
+						$local . '/core-tests',
+						WORKSPACE . '/tests'
 					);
+
+					foreach (ExtensionManager::listInstalledHandles() as $handle) {
+						$paths[] = sprintf(
+							'%s/%s/tests',
+							EXTENSIONS, $handle
+						);
+					}
 				}
 
 				foreach ($paths as $path) {
-					$found = glob($path, GLOB_NOSORT);
+					$found = glob($path . '/test.*.php', GLOB_NOSORT);
 
 					if (empty($found)) continue;
 
 					$files = array_merge($files, $found);
 				}
 
-				self::$cache = $files;
+				self::$cache[$key] = $files;
 
 				parent::__construct($files);
 			}
 
 			else {
-				parent::__construct(self::$cache);
+				parent::__construct(self::$cache[$key]);
 			}
 		}
 
@@ -64,6 +76,5 @@
 
 			return false;
 		}
-	}
 
-?>
+	}
