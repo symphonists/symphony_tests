@@ -438,7 +438,6 @@
 		}
 
 		public function testProcessing() {
-
 			DateTimeObj::setSettings(array(
 				'time_format' => 'g:i a',
 				'date_format' => 'm/d/Y',
@@ -453,9 +452,22 @@
 			$timestamp = DateTimeObj::get('U', $input);
 
 			$this->assertEqual($input, DateTimeObj::get('m/d/Y g:i a', $timestamp));
+		}
 
+		public function testInvalidDate() {
+			DateTimeObj::setSettings(array(
+				'time_format' => 'g:i a',
+				'date_format' => 'm/d/Y',
+				'datetime_separator' => ' ',
+				'timezone' => 'Australia/Brisbane',
+			));
+
+			$input = 'Not a date';
+
+			$this->assertFalse(DateTimeObj::validate($input));
+			$this->assertFalse(DateTimeObj::parse($input));
+			$this->assertFalse(DateTimeObj::format($input));
+			$this->assertFalse(DateTimeObj::getGMT('m/d/Y g:i a', $input));
 		}
 
 	}
-
-?>

@@ -20,7 +20,7 @@
 		 */
 		public function __construct() {
 			if (!isset(self::$cache)) {
-				$local = Symphony::ExtensionManager()->create('symphony_tests')->getExtensionDir();
+				$local = ExtensionManager::create('symphony_tests')->getExtensionDir();
 				$paths = array(
 					SYMPHONY . '/tests/test.*.php',
 					$local . '/core-tests/test.*.php',
@@ -28,7 +28,7 @@
 				);
 				$files = array();
 
-				foreach (Symphony::ExtensionManager()->listInstalledHandles() as $handle) {
+				foreach (ExtensionManager::listInstalledHandles() as $handle) {
 					$paths[] = sprintf(
 						'%s/%s/tests/test.*.php',
 						EXTENSIONS, $handle

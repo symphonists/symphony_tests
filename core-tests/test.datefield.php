@@ -50,8 +50,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-26T21:48:00+10:00');
-			$this->assertEqual($result['local'], '1319629680');
-			$this->assertEqual($result['gmt'], '1319629680');
+			$this->assertEqual($result['date'], '2011-10-26T11:48:00+00:00');
 		}
 
 		public function testprocessRawFieldDataDifferentFormat() {
@@ -68,8 +67,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-26T21:48:00+10:00');
-			$this->assertEqual($result['local'], '1319629680');
-			$this->assertEqual($result['gmt'], '1319629680');
+			$this->assertEqual($result['date'], '2011-10-26T11:48:00+00:00');
 		}
 
 		public function testprocessRawFieldDataDifferentTimezone() {
@@ -86,8 +84,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-27T07:48:00+10:00');
-			$this->assertEqual($result['local'], '1319665680');
-			$this->assertEqual($result['gmt'], '1319665680');
+			$this->assertEqual($result['date'], '2011-10-26T21:48:00+00:00');
 
 			return $result;
 		}
