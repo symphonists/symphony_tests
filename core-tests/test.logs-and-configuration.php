@@ -6,13 +6,6 @@
 	* Check for read and write access, getting, setting and removing
 	*/
 	class SymphonyTestLogsAndConfiguration extends UnitTestCase {
-		public function setUp() {
-
-		}
-
-		public function tearDown() {
-
-		}
 
 		public function testConfiguration() {
 			$conf = Symphony::Configuration();

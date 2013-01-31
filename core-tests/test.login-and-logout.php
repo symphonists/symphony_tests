@@ -24,7 +24,7 @@
 
 			$this->setField('username', $this->username);
 			$this->setField('password', $this->password);
-			$this->assertText('Login');
+			$this->assertText('Symphony Login');
 
 			$this->showRequest();
 			$this->showHeaders();
@@ -33,14 +33,14 @@
 				'action[login]'	=> 'login'
 			));
 
-			$this->assertText('Logout');
+			$this->assertText('Log out');
 
 			$this->showRequest();
 			$this->showHeaders();
 
-			$this->click('Logout');
+			$this->click('Log out');
 
-			$this->assertNoText('Login');
+			$this->assertNoText('Symphony Login');
 			$this->showHeaders();
 		}
 	}

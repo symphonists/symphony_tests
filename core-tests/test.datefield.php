@@ -13,7 +13,7 @@
 			require_once TOOLKIT . '/class.field.php';
 			require_once TOOLKIT . '/fields/field.date.php';
 
-			$this->field = new fieldDate(Symphony::Engine());
+			$this->field = new fieldDate();
 		}
 
 		public function testcheckPostFieldData() {
@@ -33,7 +33,7 @@
 			$this->assertEqual(Field::__OK__, $this->field->checkPostFieldData('2011-10-26 21:48', $message));
 
 			// Date in an invalid pattern (according to PHP anyway)
-			$this->assertEqual(Field::__INVALID_FIELDS__, $this->field->checkPostFieldData('26/10/2011 9:48 pm', $message));
+			$this->assertEqual(Field::__INVALID_FIELDS__, $this->field->checkPostFieldData('Not a date', $message));
 		}
 
 		public function testprocessRawFieldDataConfigFormat() {
@@ -50,7 +50,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-26T21:48:00+10:00');
-			$this->assertEqual($result['date'], '2011-10-26T11:48:00+00:00');
+			$this->assertEqual($result['date'], '2011-10-26 11:48:00');
 		}
 
 		public function testprocessRawFieldDataDifferentFormat() {
@@ -67,7 +67,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-26T21:48:00+10:00');
-			$this->assertEqual($result['date'], '2011-10-26T11:48:00+00:00');
+			$this->assertEqual($result['date'], '2011-10-26 11:48:00');
 		}
 
 		public function testprocessRawFieldDataDifferentTimezone() {
@@ -84,7 +84,7 @@
 			$result = $this->field->processRawFieldData($input, $status);
 
 			$this->assertEqual($result['value'], '2011-10-27T07:48:00+10:00');
-			$this->assertEqual($result['date'], '2011-10-26T21:48:00+00:00');
+			$this->assertEqual($result['date'], '2011-10-26 21:48:00');
 
 			return $result;
 		}
